@@ -17,7 +17,8 @@ export async function onRequest(context) {  // Contents of context object
      }).then(async (response) => {
         console.log(response.ok); // true if the response status is 2xx
         console.log(response.status); // 200
-        if(response.ok){
+    // fix: 304 not modified ListType Block can be displayed
+    if (response.ok || (!response.ok && response.status === 304)) {
             // Referer header equal to the admin page
             console.log(url.origin+"/admin")
             if (request.headers.get('Referer') == url.origin+"/admin") {
